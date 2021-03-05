@@ -1,9 +1,15 @@
 // app.js
 const express = require('express')
+const timestamp = require('time-stamp')
 const app = express()
 const port = 3000
 
-app.use(express.static('public'))
+app.use((req, res, next) => {
+  const DATE = timestamp('YYYY-MM-DD HH:mm:ss')
+  let now = Date.now()
+  console.log(`${DATE} | ${req.method} From ${req.originalUrl} `)
+  // next()
+})
 
 app.get('/', (req, res) => {
   res.send('列出全部 Todo')
