@@ -6,9 +6,14 @@ const port = 3000
 
 app.use((req, res, next) => {
   const DATE = timestamp('YYYY-MM-DD HH:mm:ss')
-  let now = Date.now()
-  console.log(`${DATE} | ${req.method} From ${req.originalUrl} `)
-  // next()
+  const startTime = Date.now()
+  res.on('finish', () => {
+    let finishTime = Date.now()
+    let duration = finishTime - startTime
+    console.log(`${DATE} | ${req.method} from ${req.originalUrl} | total time : ${duration} ms`)
+  })
+
+  next()
 })
 
 app.get('/', (req, res) => {
